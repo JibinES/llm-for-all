@@ -18,6 +18,7 @@ interface WizardState {
   setOpenWebUIUrl: (url: string) => void;
   setGuardrailPrompt: (prompt: string) => void;
   loadTestPreset: () => void;
+  loadTestPresetOllama: () => void;
   reset: () => void;
 }
 
@@ -58,6 +59,31 @@ export const useWizardStore = create<WizardState>((set) => ({
         port: 8000,
         guardrailPrompt: '',
         gpuEnabled: true,
+        maxModelLen: 8192,
+        quantization: '',
+      },
+    }),
+  loadTestPresetOllama: () =>
+    set({
+      step: 'deploy',
+      recommendation: {
+        modelName: 'Gemma 3 1B (Ollama)',
+        modelId: 'gemma3:1b',
+        parameters: '1B',
+        quantization: 'Q4_K_M',
+        framework: 'ollama',
+        frameworkReason: 'Lightweight test preset — smaller Docker image (~1-2GB)',
+        estimatedSpeed: '~40 tok/s',
+        contextWindow: 8192,
+        vramRequired: 1,
+        reasoning: 'Fast Ollama test preset. Smaller download, works on CPU too.',
+      },
+      deploymentConfig: {
+        framework: 'ollama',
+        modelId: 'gemma3:1b',
+        port: 11434,
+        guardrailPrompt: '',
+        gpuEnabled: false,
         maxModelLen: 8192,
         quantization: '',
       },

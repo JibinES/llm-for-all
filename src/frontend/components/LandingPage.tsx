@@ -6,6 +6,7 @@ import { Button } from "@/frontend/components/ui/button";
 export function LandingPage() {
   const setStep = useWizardStore((s) => s.setStep);
   const loadTestPreset = useWizardStore((s) => s.loadTestPreset);
+  const loadTestPresetOllama = useWizardStore((s) => s.loadTestPresetOllama);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
@@ -56,14 +57,22 @@ export function LandingPage() {
             size="lg"
             variant="outline"
             className="text-lg px-8 py-6"
+            onClick={loadTestPresetOllama}
+          >
+            Test Ollama
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="text-lg px-8 py-6"
             onClick={loadTestPreset}
           >
-            Test Mode
+            Test vLLM
           </Button>
         </div>
 
         <p className="text-xs text-muted-foreground">
-          Test Mode deploys Gemma 3 1B via vLLM + Open WebUI to verify the full flow.
+          Test modes deploy Gemma 3 1B + Open WebUI. Ollama image ~1-2GB, vLLM image ~6-8GB.
         </p>
 
         <p className="text-xs text-muted-foreground">
