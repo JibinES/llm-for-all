@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useWizardStore } from "@/frontend/store/wizard";
 import { Button } from "@/frontend/components/ui/button";
 
@@ -7,9 +8,38 @@ export function LandingPage() {
   const setStep = useWizardStore((s) => s.setStep);
   const loadTestPreset = useWizardStore((s) => s.loadTestPreset);
   const loadTestPresetOllama = useWizardStore((s) => s.loadTestPresetOllama);
+  const [showTest, setShowTest] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 relative">
+      {/* Test menu - top right corner */}
+      <div className="absolute top-4 right-4">
+        <div className="relative">
+          <button
+            onClick={() => setShowTest(!showTest)}
+            className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors px-2 py-1"
+          >
+            Dev
+          </button>
+          {showTest && (
+            <div className="absolute right-0 top-8 bg-card border border-border rounded-lg shadow-lg p-2 space-y-1 min-w-[160px] z-50">
+              <button
+                onClick={loadTestPresetOllama}
+                className="block w-full text-left text-sm px-3 py-2 rounded hover:bg-muted transition-colors"
+              >
+                Test Ollama
+              </button>
+              <button
+                onClick={loadTestPreset}
+                className="block w-full text-left text-sm px-3 py-2 rounded hover:bg-muted transition-colors"
+              >
+                Test vLLM
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="max-w-2xl text-center space-y-8">
         <div className="space-y-4">
           <h1 className="text-5xl font-bold tracking-tight">
@@ -45,35 +75,13 @@ export function LandingPage() {
           </div>
         </div>
 
-        <div className="flex gap-4 justify-center">
-          <Button
-            size="lg"
-            className="text-lg px-8 py-6"
-            onClick={() => setStep("scan")}
-          >
-            Get Started
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="text-lg px-8 py-6"
-            onClick={loadTestPresetOllama}
-          >
-            Test Ollama
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="text-lg px-8 py-6"
-            onClick={loadTestPreset}
-          >
-            Test vLLM
-          </Button>
-        </div>
-
-        <p className="text-xs text-muted-foreground">
-          Test modes deploy Gemma 3 1B + Open WebUI. Ollama image ~1-2GB, vLLM image ~6-8GB.
-        </p>
+        <Button
+          size="lg"
+          className="text-lg px-8 py-6"
+          onClick={() => setStep("scan")}
+        >
+          Get Started
+        </Button>
 
         <p className="text-xs text-muted-foreground">
           AMD Slingshot Hackathon — AutoDeploy LLM Agent
