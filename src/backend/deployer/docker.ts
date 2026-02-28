@@ -3,9 +3,9 @@ import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
-export async function run(cmd: string): Promise<string> {
+export async function run(cmd: string, timeoutMs = 1800000): Promise<string> {
   try {
-    const { stdout } = await execAsync(cmd, { timeout: 300000 });
+    const { stdout } = await execAsync(cmd, { timeout: timeoutMs, maxBuffer: 50 * 1024 * 1024 });
     return stdout.trim();
   } catch (e: unknown) {
     const error = e as { stderr?: string; message?: string };
