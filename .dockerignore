@@ -1,0 +1,40 @@
+# dependencies (rebuilt inside container)
+node_modules
+
+# next.js build output
+.next
+
+# git
+.git
+.gitignore
+
+# env files (passed via docker run --env-file or compose)
+.env
+.env.*
+
+# editor & ide
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# os
+.DS_Store
+Thumbs.db
+
+# docs (not needed in image)
+*.md
+LICENSE
+
+# docker configs (not needed inside image)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# testing & ci
+coverage/
+.github/
+
+# misc
+*.log
+*.pem

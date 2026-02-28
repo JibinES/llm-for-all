@@ -1,0 +1,21 @@
+services:
+  llmforeveryone:
+    build: .
+    container_name: llmforeveryone
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount Docker socket so the app can manage sibling containers
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - KARUNYA_API_KEY=${KARUNYA_API_KEY:-sk-placeholder}
+      - KARUNYA_BASE_URL=${KARUNYA_BASE_URL:-https://llm.karunya.ai/v1}
+      - KARUNYA_MODEL=${KARUNYA_MODEL:-smart}
+    networks:
+      - llmforeveryone-net
+    restart: unless-stopped
+
+networks:
+  llmforeveryone-net:
+    name: llmforeveryone-net
+    driver: bridge
